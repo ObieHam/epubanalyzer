@@ -9,18 +9,28 @@ const EpubCharacterAnalyzer = () => {
   const [error, setError] = useState('');
 
   const descriptorPatterns = {
-    body: ['curvy', 'curvaceous', 'voluptuous', 'shapely', 'hourglass', 'petite', 'slender', 'slim', 'thin', 'skinny', 'gaunt', 'lean', 'athletic', 'muscular', 'toned', 'fit', 'buff', 'ripped', 'stocky', 'burly', 'heavyset', 'plump', 'chubby', 'overweight', 'obese', 'portly', 'stout', 'rotund', 'brawny', 'broad-shouldered', 'narrow-shouldered', 'willowy', 'lanky', 'gangly', 'scrawny', 'wiry', 'lithe', 'graceful', 'statuesque', 'imposing', 'compact', 'sturdy'],
-    chest: ['big breasts', 'large breasts', 'small breasts', 'flat-chested', 'well-endowed', 'busty', 'ample bosom', 'full-figured', 'buxom', 'large bust', 'small bust', 'generous bust', 'modest bust', 'full chest', 'barrel-chested', 'broad chest', 'narrow chest', 'deep chest', 'flat chest', 'muscular chest', 'hairy chest'],
-    height: ['tall', 'short', 'towering', 'diminutive', 'giant', 'tiny', 'average height', 'medium height', 'six feet', 'five feet', 'over six feet', 'under five feet', 'vertically challenged'],
-    hair: ['blonde', 'brunette', 'redhead', 'ginger', 'auburn', 'black hair', 'dark hair', 'light hair', 'brown hair', 'gray hair', 'grey hair', 'white hair', 'silver hair', 'salt and pepper', 'graying', 'greying', 'bald', 'balding', 'long hair', 'short hair', 'shoulder-length', 'waist-length', 'cropped', 'buzz cut', 'crew cut', 'curly', 'straight', 'wavy', 'kinky', 'frizzy', 'silky', 'coarse', 'fine', 'thick', 'thin hair', 'ponytail', 'braid', 'braided', 'dreadlocks', 'afro', 'mohawk', 'bob cut'],
-    eyes: ['blue eyes', 'green eyes', 'brown eyes', 'hazel eyes', 'gray eyes', 'grey eyes', 'amber eyes', 'dark eyes', 'light eyes', 'bright eyes', 'pale eyes', 'piercing eyes', 'almond-shaped', 'round eyes', 'close-set', 'wide-set', 'deep-set', 'hooded eyes', 'droopy eyes', 'upturned eyes', 'downturned eyes'],
-    skin: ['pale', 'fair', 'light', 'dark', 'tan', 'tanned', 'olive', 'bronze', 'ebony', 'ivory', 'porcelain', 'creamy', 'ruddy', 'rosy', 'sallow', 'freckled', 'spotted', 'blemished', 'clear skin', 'smooth skin', 'rough skin', 'weathered', 'wrinkled', 'sun-kissed', 'alabaster'],
-    face: ['beautiful', 'handsome', 'pretty', 'attractive', 'gorgeous', 'stunning', 'striking', 'plain', 'homely', 'ugly', 'round face', 'oval face', 'square face', 'heart-shaped', 'angular', 'chiseled', 'soft features', 'sharp features', 'high cheekbones', 'prominent cheekbones', 'hollow cheeks', 'chubby cheeks', 'dimples', 'dimpled', 'strong jaw', 'weak chin', 'square jaw', 'pointed chin', 'cleft chin', 'double chin', 'full lips', 'thin lips', 'pouty lips', 'wide mouth', 'small mouth', 'crooked smile', 'big nose', 'small nose', 'aquiline nose', 'button nose', 'hooked nose', 'Roman nose', 'snub nose', 'thick eyebrows', 'thin eyebrows', 'arched eyebrows', 'bushy eyebrows', 'unibrow'],
-    facialHair: ['beard', 'bearded', 'goatee', 'mustache', 'moustache', 'clean-shaven', 'stubble', 'five o\'clock shadow', 'sideburns', 'mutton chops', 'full beard', 'scraggly beard', 'neatly trimmed'],
-    bodyParts: ['long legs', 'short legs', 'thick thighs', 'thin legs', 'muscular legs', 'shapely legs', 'skinny legs', 'long arms', 'short arms', 'muscular arms', 'thin arms', 'hairy arms', 'big hands', 'small hands', 'delicate hands', 'rough hands', 'calloused', 'slender fingers', 'thick fingers', 'small feet', 'large feet', 'dainty feet', 'broad hips', 'narrow hips', 'wide hips', 'child-bearing hips', 'flat stomach', 'toned stomach', 'pot belly', 'six-pack', 'abs', 'love handles', 'round bottom', 'flat bottom', 'pert behind', 'wide rear', 'muscular buttocks', 'thick neck', 'long neck', 'swan neck', 'bull neck'],
-    age: ['young', 'old', 'elderly', 'ancient', 'youthful', 'middle-aged', 'mature', 'aging', 'ageless', 'teenage', 'adolescent', 'twenties', 'thirties', 'forties', 'fifties', 'sixties', 'seventies'],
-    marks: ['scar', 'scarred', 'birthmark', 'mole', 'tattoo', 'tattooed', 'piercing', 'pierced', 'missing tooth', 'gold tooth', 'crooked teeth', 'perfect teeth', 'gap-toothed'],
-    overall: ['well-groomed', 'disheveled', 'unkempt', 'scruffy', 'neat', 'tidy', 'messy', 'elegant', 'refined', 'rugged', 'delicate', 'feminine', 'masculine', 'androgynous', 'boyish', 'girlish', 'matronly', 'distinguished']
+    body: [
+      'fat', 'obese', 'overweight', 'chubby', 'plump', 'heavyset', 'stout', 'rotund', 'large', 'thick',
+      'thin', 'skinny', 'scrawny', 'slender', 'slim', 'lean', 'bony', 'gaunt', 'petite', 'lanky',
+      'curvy', 'voluptuous', 'shapely', 'hourglass', 'waif-like', 'athletic', 'toned', 'muscular'
+    ],
+    chest: [
+      'A cup', 'B cup', 'C cup', 'D cup', 'DD cup', 'E cup', 'F cup', 'G cup', 'H cup',
+      'big breasts', 'large breasts', 'huge breasts', 'heaving bosom', 'ample chest',
+      'small breasts', 'flat-chested', 'busty', 'well-endowed', 'cleavage', 'perky breasts'
+    ],
+    clothing: [
+      'shirt', 'pants', 'trousers', 'jeans', 'dress', 'skirt', 'blouse', 'jacket', 'coat', 'sweater',
+      'suit', 'gown', 'uniform', 'lingerie', 'underwear', 'bra', 'panties', 'stockings', 'socks',
+      'boots', 'shoes', 'heels', 'sneakers', 'hat', 'cap', 'gloves', 'scarf', 'tie', 'belt'
+    ],
+    indianClothing: [
+      'sari', 'saree', 'kurta', 'kurti', 'salwar', 'kameez', 'lehenga', 'choli', 'dupatta',
+      'dhoti', 'lungi', 'sherwani', 'anarkali', 'ghagra', 'pajama', 'turban', 'pagri'
+    ],
+    face: ['beautiful', 'handsome', 'pretty', 'attractive', 'ugly', 'round face', 'chiseled', 'sharp features'],
+    hair: ['blonde', 'brunette', 'black hair', 'red hair', 'long hair', 'short hair', 'curly', 'straight'],
+    skin: ['pale', 'fair', 'dark', 'tan', 'olive', 'brown', 'ebony', 'ivory', 'porcelain']
   };
 
   const allDescriptors = Object.values(descriptorPatterns).flat();
@@ -45,7 +55,7 @@ const EpubCharacterAnalyzer = () => {
   };
 
   const isCommonWord = (word) => {
-    const common = new Set(['The', 'And', 'But', 'Not', 'Chapter', 'Part', 'Book', 'Page', 'Sir', 'Lady', 'Lord', 'King', 'Queen', 'Doctor', 'Professor', 'Captain', 'Please', 'Thank']);
+    const common = new Set(['The', 'And', 'But', 'Not', 'Chapter', 'Part', 'Book', 'Page', 'Sir', 'Lady', 'Lord', 'King', 'Queen', 'Doctor', 'Professor', 'Captain']);
     return common.has(word);
   };
 
@@ -56,20 +66,20 @@ const EpubCharacterAnalyzer = () => {
     matches.forEach(name => {
       if (name.length > 2 && !isCommonWord(name)) counts[name] = (counts[name] || 0) + 1;
     });
-    return Object.entries(counts).filter(([_, c]) => c >= 3).sort((a, b) => b[1] - a[1]).slice(0, 20).map(([n]) => n);
+    return Object.entries(counts).filter(([_, c]) => c >= 3).sort((a, b) => b[1] - a[1]).slice(0, 25).map(([n]) => n);
   };
 
   const findDescriptions = (text, name) => {
     const sentences = text.split(/[.!?]+\s+/);
     const descriptions = new Set();
-    sentences.forEach((s, idx) => {
+    sentences.forEach((s) => {
       if (new RegExp(`\\b${name}\\b`, 'i').test(s)) {
         if (allDescriptors.some(d => s.toLowerCase().includes(d.toLowerCase()))) {
           descriptions.add(s.trim());
         }
       }
     });
-    return Array.from(descriptions).slice(0, 5);
+    return Array.from(descriptions).slice(0, 10);
   };
 
   const categorizeDescriptions = (descriptions) => {
@@ -109,37 +119,59 @@ const EpubCharacterAnalyzer = () => {
     }
   };
 
+  const categoryLabels = {
+    body: 'Body Type',
+    chest: 'Breast/Chest Detail',
+    clothing: 'Western Clothing',
+    indianClothing: 'Indian Attire',
+    face: 'Facial Features',
+    hair: 'Hair',
+    skin: 'Skin Tone'
+  };
+
   return (
-    <div className="min-h-screen p-8 bg-slate-50">
-      <div className="max-w-4xl mx-auto bg-white shadow-xl rounded-2xl p-8">
-        <div className="flex items-center gap-4 mb-8">
-          <Book className="w-10 h-10 text-blue-600" />
-          <h1 className="text-4xl font-extrabold text-slate-800">Character Physical Analyzer</h1>
+    <div className="min-h-screen p-8 bg-zinc-50 font-sans">
+      <div className="max-w-5xl mx-auto bg-white shadow-2xl rounded-3xl p-10">
+        <div className="flex items-center gap-5 mb-10 border-b pb-6">
+          <Book className="w-12 h-12 text-indigo-600" />
+          <div>
+            <h1 className="text-4xl font-black text-zinc-900 tracking-tight">EPUB Character Profiler</h1>
+            <p className="text-zinc-500 font-medium">Extracting physical traits, clothing, and body details.</p>
+          </div>
         </div>
 
-        <label className="block border-4 border-dashed border-blue-100 rounded-xl p-12 text-center cursor-pointer hover:bg-blue-50 transition-all">
-          <Upload className="mx-auto w-12 h-12 text-blue-400 mb-4" />
-          <span className="text-lg font-medium text-slate-600">{file ? file.name : "Select an EPUB book"}</span>
+        <label className="block border-4 border-dashed border-indigo-50 rounded-2xl p-16 text-center cursor-pointer hover:border-indigo-200 hover:bg-indigo-50/50 transition-all group">
+          <Upload className="mx-auto w-14 h-14 text-indigo-300 mb-4 group-hover:scale-110 transition-transform" />
+          <span className="text-xl font-bold text-zinc-700">{file ? file.name : "Drop EPUB here or click to browse"}</span>
           <input type="file" className="hidden" accept=".epub" onChange={handleFileUpload} />
         </label>
 
-        {analyzing && <div className="mt-8 text-center animate-pulse text-blue-600 font-bold">Reading book and extracting physical traits...</div>}
-        {error && <div className="mt-6 p-4 bg-red-50 text-red-700 rounded-lg flex items-center gap-2"><AlertCircle /> {error}</div>}
+        {analyzing && <div className="mt-12 text-center animate-pulse text-indigo-600 font-black text-xl">Scanning text for physical details...</div>}
+        {error && <div className="mt-8 p-5 bg-red-50 text-red-700 rounded-xl flex items-center gap-3 font-bold border border-red-100"><AlertCircle /> {error}</div>}
 
-        <div className="mt-10 space-y-6">
+        <div className="mt-12 space-y-10">
           {characters.map((char, i) => (
-            <div key={i} className="border border-slate-200 rounded-xl p-6 bg-white hover:shadow-md transition-shadow">
-              <h2 className="text-2xl font-bold text-blue-900 mb-2">{char.name}</h2>
-              <div className="flex flex-wrap gap-2 mb-4">
+            <div key={i} className="border border-zinc-100 rounded-3xl p-8 bg-zinc-50/50 hover:bg-white hover:shadow-xl transition-all">
+              <div className="flex justify-between items-start mb-6">
+                <h2 className="text-3xl font-black text-indigo-950 uppercase tracking-tighter">{char.name}</h2>
+                <span className="bg-indigo-600 text-white px-4 py-1 rounded-full text-xs font-bold">{char.count} Match(es)</span>
+              </div>
+              
+              <div className="flex flex-wrap gap-2 mb-8">
                 {Object.keys(char.categorized).map(cat => (
-                  <span key={cat} className="px-3 py-1 bg-blue-100 text-blue-700 text-xs font-bold uppercase rounded-full">{cat}</span>
+                  <span key={cat} className="px-4 py-1.5 bg-white border border-indigo-100 text-indigo-700 text-xs font-black rounded-lg shadow-sm">
+                    {categoryLabels[cat] || cat}
+                  </span>
                 ))}
               </div>
-              <ul className="space-y-3">
+
+              <div className="space-y-4">
                 {char.descriptions.map((d, j) => (
-                  <li key={j} className="text-slate-700 italic border-l-4 border-blue-200 pl-4">"{d}"</li>
+                  <div key={j} className="relative p-5 bg-white rounded-2xl shadow-sm border border-zinc-100">
+                    <p className="text-zinc-800 leading-relaxed italic text-lg">"{d}"</p>
+                  </div>
                 ))}
-              </ul>
+              </div>
             </div>
           ))}
         </div>
