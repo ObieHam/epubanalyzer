@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Upload, User, Book, AlertCircle, Download } from 'lucide-react';
+import JSZip from 'jszip';
 
 const EpubCharacterAnalyzer = () => {
   const [file, setFile] = useState(null);
@@ -104,32 +105,10 @@ const EpubCharacterAnalyzer = () => {
   const allDescriptors = Object.values(descriptorPatterns).flat();
 
   const parseEpub = async (file) => {
-    // Load JSZip from CDN
-    if (!window.JSZip) {
-      await new Promise((resolve, reject) => {
-        const script = document.createElement('script');
-        script.src = 'https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js';
-        script.onload = resolve;
-        script.onerror = reject;
-        document.head.appendChild(script);
-      });
-    }
-    
-    const JSZip = window.JSZip;
     const arrayBuffer = await file.arrayBuffer();
     const zip = await JSZip.loadAsync(arrayBuffer);
     
     let textContent = '';
-    const contentFiles = [];
-    
-    // Find content.opf to get reading order
-    let opfFile = null;
-    for (let filename in zip.files) {
-      if (filename.endsWith('.opf')) {
-        opfFile = filename;
-        break;
-      }
-    }
     
     // Get all HTML/XHTML files
     const htmlFiles = Object.keys(zip.files).filter(name => 
@@ -162,7 +141,6 @@ const EpubCharacterAnalyzer = () => {
     const sentences = text.split(/[.!?]+\s+/);
     const namePattern = /\b[A-Z][a-z]+(?:\s+[A-Z][a-z]+)?\b/g;
     const nameCounts = {};
-    const nameContexts = {};
     
     sentences.forEach(sentence => {
       const matches = sentence.match(namePattern);
@@ -170,10 +148,6 @@ const EpubCharacterAnalyzer = () => {
         matches.forEach(name => {
           if (name.length > 2 && !isCommonWord(name)) {
             nameCounts[name] = (nameCounts[name] || 0) + 1;
-            if (!nameContexts[name]) {
-              nameContexts[name] = [];
-            }
-            nameContexts[name].push(sentence);
           }
         });
       }
